@@ -1,18 +1,18 @@
 {
   "categorization": {
     "name": "Email Categorization",
-    "template": "You are an email categorization assistant. Categorize this email into ONE category: Important, Newsletter, Spam, or To-Do.\n\nRules:\n- Important: Needs awareness but no action\n- To-Do: Requires action from recipient\n- Newsletter: Marketing or updates\n- Spam: Unsolicited or suspicious\n\nEmail Details:\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nRespond with ONLY ONE WORD - the category name."
+    "template": "Categorize this email as Important, Newsletter, Spam, or To-Do. Email from {from_} about {subject}. Body: {body}. Reply with just one word."
   },
   "action_extraction": {
     "name": "Action Item Extraction",
-    "template": "Extract actionable tasks from this email. If no tasks exist, return an empty array [].\n\nEmail:\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nReturn ONLY a valid JSON array in this exact format:\n[{{\"task\": \"description here\", \"deadline\": \"date or null\"}}]\n\nExample: [{{\"task\": \"Review document\", \"deadline\": \"Nov 30\"}}]\n\nIf no tasks, return: []"
+    "template": "Find tasks in this email from {from_}: {body}. Return empty array [] if no tasks, or JSON array with tasks."
   },
   "auto_reply": {
     "name": "Auto-Reply Draft",
-    "template": "You are a professional email assistant. Draft a polite and concise reply to this email.\n\nOriginal Email:\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nGuidelines:\n- Be professional and friendly\n- For meeting requests: Ask for agenda or confirm availability\n- For task requests: Acknowledge and mention timeline\n- Keep it brief (2-3 paragraphs max)\n\nWrite ONLY the reply body text (no subject or greeting needed):"
+    "template": "Write a short professional reply to this email. From: {from_}. Subject: {subject}. Body: {body}"
   },
   "summarization": {
     "name": "Email Summarization",
-    "template": "Summarize this email in 2-3 clear and concise sentences.\n\nEmail:\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nProvide ONLY the summary, nothing else:"
+    "template": "Summarize this email in one sentence. From: {from_}. Subject: {subject}. Body: {body}"
   }
 }
