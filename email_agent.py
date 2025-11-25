@@ -1,6 +1,7 @@
 import os
 import json
 from typing import Dict, List, Optional
+import traceback
 
 try:
     from groq import Groq
@@ -34,7 +35,8 @@ class EmailAgent:
                     return cat
             return "Important"
         except Exception as e:
-            print(f"Categorization error: {e}")
+            print(f"Categorization error: {type(e).__name__}: {str(e)}")
+            traceback.print_exc()
             return "Important"
     
     def extract_actions(self, email: Dict, prompt_template: str) -> List[Dict]:
@@ -67,44 +69,67 @@ class EmailAgent:
                     valid_actions.append(action)
             return valid_actions
         except Exception as e:
-            print(f"Action extraction error: {e}")
+            print(f"Action extraction error: {type(e).__name__}: {str(e)}")
+            traceback.print_exc()
             return []
     
     def generate_reply(self, email: Dict, prompt_template: str) -> str:
         try:
+            print(f"Generating reply with model: {self.model}")
+            
             prompt = prompt_template.format(
                 from_=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
+            
+            print(f"Prompt length: {len(prompt)} characters")
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
                 max_tokens=400
             )
-            return response.choices[0].message.content.strip()
+            
+            result = response.choices[0].message.content.strip()
+            print(f"Reply generated successfully, length: {len(result)}")
+            return result
+            
         except Exception as e:
-            print(f"Reply generation error: {e}")
-            return f"Unable to generate reply. Error: {str(e)}"
+            error_msg = f"Reply generation failed: {type(e).__name__}: {str(e)}"
+            print(error_msg)
+            traceback.print_exc()
+            return error_msg
     
     def summarize_email(self, email: Dict, prompt_template: str) -> str:
         try:
+            print(f"Summarizing email from: {email.get('from')}")
+            
             prompt = prompt_template.format(
                 from_=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
+            
+            print(f"Prompt: {prompt[:100]}...")
+            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.5,
                 max_tokens=250
             )
-            return response.choices[0].message.content.strip()
+            
+            result = response.choices[0].message.content.strip()
+            print(f"Summary generated: {result[:50]}...")
+            return result
+            
         except Exception as e:
-            print(f"Summarization error: {e}")
-            return f"Unable to summarize. Error: {str(e)}"
+            error_msg = f"Summarization failed: {type(e).__name__}: {str(e)}"
+            print(error_msg)
+            traceback.print_exc()
+            return error_msg
     
     def chat_query(self, query: str, context: str) -> str:
         try:
@@ -117,5 +142,7 @@ class EmailAgent:
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
-            print(f"Chat query error: {e}")
-            return f"Error processing query. {str(e)}"
+            error_msg = f"Chat query failed: {type(e).__name__}: {str(e)}"
+            print(error_msg)
+            traceback.print_exc()
+            return error_msg
