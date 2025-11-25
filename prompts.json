@@ -1,0 +1,18 @@
+{
+  "categorization": {
+    "name": "Email Categorization",
+    "template": "Analyze the following email and categorize it into ONE of these categories: Important, Newsletter, Spam, or To-Do.\n\nRules:\n- Important: Emails requiring awareness but no immediate action\n- To-Do: Emails with explicit action requests or tasks\n- Newsletter: Marketing, updates, or promotional content\n- Spam: Unsolicited or suspicious emails\n\nEmail:\nFrom: {from}\nSubject: {subject}\nBody: {body}\n\nRespond with ONLY the category name (Important/Newsletter/Spam/To-Do)."
+  },
+  "action_extraction": {
+    "name": "Action Item Extraction",
+    "template": "Extract actionable tasks from this email. If no tasks exist, return an empty array.\n\nEmail:\nFrom: {from}\nSubject: {subject}\nBody: {body}\n\nReturn ONLY a JSON array in this format:\n[\n  {\"task\": \"description\", \"deadline\": \"date or null\"}\n]\n\nDo not include any other text."
+  },
+  "auto_reply": {
+    "name": "Auto-Reply Draft",
+    "template": "Draft a professional email reply based on the context below.\n\nOriginal Email:\nFrom: {from}\nSubject: {subject}\nBody: {body}\n\nGuidelines:\n- For meeting requests: Ask for agenda and confirm availability\n- For task requests: Acknowledge and provide estimated timeline\n- For questions: Provide helpful response or redirect\n- Use a friendly yet professional tone\n\nGenerate ONLY the reply body text."
+  },
+  "summarization": {
+    "name": "Email Summarization",
+    "template": "Summarize the following email in 2-3 concise sentences.\n\nEmail:\nFrom: {from}\nSubject: {subject}\nBody: {body}\n\nProvide ONLY the summary."
+  }
+}
