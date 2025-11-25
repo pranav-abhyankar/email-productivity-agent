@@ -1,18 +1,18 @@
 {
   "categorization": {
     "name": "Email Categorization",
-    "template": "Categorize this email as Important, Newsletter, Spam, or To-Do. Email from {from_} about {subject}. Body: {body}. Reply with just one word."
+    "template": "You are an email assistant. Categorize this email into ONE category only.\n\nCategories:\n- Important: Needs awareness but no action\n- To-Do: Requires action from recipient  \n- Newsletter: Marketing, updates, promotions\n- Spam: Unsolicited or suspicious\n\nEmail:\nFrom: {from_sender}\nSubject: {subject}\nBody: {body}\n\nRespond with ONLY the category name (one word)."
   },
   "action_extraction": {
     "name": "Action Item Extraction",
-    "template": "Find tasks in this email from {from_}: {body}. Return empty array [] if no tasks, or JSON array with tasks."
+    "template": "Extract actionable tasks from this email. If no tasks, return [].\n\nEmail:\nFrom: {from_sender}\nSubject: {subject}\nBody: {body}\n\nReturn ONLY a JSON array:\n[{{\"task\": \"description\", \"deadline\": \"date or null\"}}]\n\nIf no tasks: []"
   },
   "auto_reply": {
     "name": "Auto-Reply Draft",
-    "template": "Write a short professional reply to this email. From: {from_}. Subject: {subject}. Body: {body}"
+    "template": "You are a professional email assistant. Write a polite, concise reply.\n\nOriginal Email:\nFrom: {from_sender}\nSubject: {subject}\nBody: {body}\n\nInstructions:\n- Be professional and friendly\n- Keep it brief (2-3 short paragraphs)\n- For meetings: confirm or ask for details\n- For requests: acknowledge and provide timeline\n- No greetings or signatures needed\n\nWrite the reply:"
   },
   "summarization": {
     "name": "Email Summarization",
-    "template": "Summarize this email in one sentence. From: {from_}. Subject: {subject}. Body: {body}"
+    "template": "Summarize this email in exactly 2-3 clear, concise sentences.\n\nEmail:\nFrom: {from_sender}\nSubject: {subject}\nBody: {body}\n\nSummary:"
   }
 }
