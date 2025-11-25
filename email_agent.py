@@ -33,7 +33,6 @@ class EmailAgent:
             )
             
             category = response.choices[0].message.content.strip()
-            # Validate category
             valid_categories = ["Important", "Newsletter", "Spam", "To-Do"]
             return category if category in valid_categories else "Important"
         
@@ -59,19 +58,14 @@ class EmailAgent:
             
             content = response.choices[0].message.content.strip()
             
-            # Handle markdown code blocks that Groq sometimes adds
             if content.startswith("```
-                # Remove code block markers
                 content = content.replace("```json", "").replace("```
             
-            # Parse JSON
             actions = json.loads(content)
             
-            # Validate it's a list
             if not isinstance(actions, list):
                 return []
             
-            # Validate each action has required fields
             valid_actions = []
             for action in actions:
                 if isinstance(action, dict) and 'task' in action:
