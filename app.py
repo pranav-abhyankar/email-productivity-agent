@@ -165,7 +165,7 @@ with st.sidebar:
             st.error("Please configure Groq API key first")
 
 # Main content - Three columns
-col1, col2, col3 = st.columns([2, 2, 2])
+col1, col2, col3 = st.columns(3)
 
 
 # Column 1: Email List
@@ -372,4 +372,5 @@ with col_stat3:
 with col_stat4:
     spam_count = len(st.session_state.db.get_emails_by_category('Spam'))
     st.metric("Spam", spam_count)
+
 
