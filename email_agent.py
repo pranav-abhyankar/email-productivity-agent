@@ -25,11 +25,14 @@ class EmailAgent:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=20
+                max_tokens=50
             )
             category = response.choices[0].message.content.strip()
             valid_categories = ["Important", "Newsletter", "Spam", "To-Do"]
-            return category if category in valid_categories else "Important"
+            for cat in valid_categories:
+                if cat.lower() in category.lower():
+                    return cat
+            return "Important"
         except Exception as e:
             print(f"Categorization error: {e}")
             return "Important"
@@ -45,16 +48,10 @@ class EmailAgent:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0,
-                max_tokens=250
+                max_tokens=300
             )
             content = response.choices[0].message.content.strip()
             
-            # Clean up any markdown formatting
-            lines = content.split('\n')
-            clean_lines = [line for line in lines if not line.strip().startswith('#')]
-            content = '\n'.join(clean_lines)
-            
-            # Try to find JSON array
             start_idx = content.find('[')
             end_idx = content.rfind(']')
             if start_idx != -1 and end_idx != -1:
@@ -69,9 +66,8 @@ class EmailAgent:
                 if isinstance(action, dict) and 'task' in action:
                     valid_actions.append(action)
             return valid_actions
-        except json.JSONDecodeError:
-            return []
-        except Exception:
+        except Exception as e:
+            print(f"Action extraction error: {e}")
             return []
     
     def generate_reply(self, email: Dict, prompt_template: str) -> str:
@@ -85,11 +81,12 @@ class EmailAgent:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=350
+                max_tokens=400
             )
             return response.choices[0].message.content.strip()
-        except Exception:
-            return "Error generating reply. Please try again."
+        except Exception as e:
+            print(f"Reply generation error: {e}")
+            return f"Unable to generate reply. Error: {str(e)}"
     
     def summarize_email(self, email: Dict, prompt_template: str) -> str:
         try:
@@ -102,11 +99,12 @@ class EmailAgent:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.5,
-                max_tokens=200
+                max_tokens=250
             )
             return response.choices[0].message.content.strip()
-        except Exception:
-            return "Error generating summary."
+        except Exception as e:
+            print(f"Summarization error: {e}")
+            return f"Unable to summarize. Error: {str(e)}"
     
     def chat_query(self, query: str, context: str) -> str:
         try:
@@ -115,8 +113,9 @@ class EmailAgent:
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=350
+                max_tokens=400
             )
             return response.choices[0].message.content.strip()
-        except Exception:
-            return "Error processing query. Please try again."
+        except Exception as e:
+            print(f"Chat query error: {e}")
+            return f"Error processing query. {str(e)}"
