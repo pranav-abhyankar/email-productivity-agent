@@ -12,7 +12,7 @@ class EmailAgent:
         if Groq is None:
             raise ImportError("Groq package not installed")
         self.client = Groq(api_key=api_key)
-        self.model = "llama3-8b-8192"
+        self.model = "llama-3.1-8b-instant"
     
     def categorize_email(self, email: Dict, prompt_template: str) -> str:
         try:
