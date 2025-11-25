@@ -1,7 +1,6 @@
 import os
 import json
 from typing import Dict, List, Optional
-import traceback
 
 try:
     from groq import Groq
@@ -13,12 +12,12 @@ class EmailAgent:
         if Groq is None:
             raise ImportError("Groq package not installed")
         self.client = Groq(api_key=api_key)
-        self.model = "llama-3.1-8b-instant"
+        self.model = "llama3-8b-8192"
     
     def categorize_email(self, email: Dict, prompt_template: str) -> str:
         try:
             prompt = prompt_template.format(
-                from_=email.get('from', 'Unknown'),
+                from_sender=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
@@ -35,14 +34,13 @@ class EmailAgent:
                     return cat
             return "Important"
         except Exception as e:
-            print(f"Categorization error: {type(e).__name__}: {str(e)}")
-            traceback.print_exc()
+            print(f"Categorization error: {e}")
             return "Important"
     
     def extract_actions(self, email: Dict, prompt_template: str) -> List[Dict]:
         try:
             prompt = prompt_template.format(
-                from_=email.get('from', 'Unknown'),
+                from_sender=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
@@ -69,67 +67,44 @@ class EmailAgent:
                     valid_actions.append(action)
             return valid_actions
         except Exception as e:
-            print(f"Action extraction error: {type(e).__name__}: {str(e)}")
-            traceback.print_exc()
+            print(f"Action extraction error: {e}")
             return []
     
     def generate_reply(self, email: Dict, prompt_template: str) -> str:
         try:
-            print(f"Generating reply with model: {self.model}")
-            
             prompt = prompt_template.format(
-                from_=email.get('from', 'Unknown'),
+                from_sender=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
-            
-            print(f"Prompt length: {len(prompt)} characters")
-            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
                 temperature=0.7,
-                max_tokens=400
+                max_tokens=500,
+                top_p=1
             )
-            
-            result = response.choices[0].message.content.strip()
-            print(f"Reply generated successfully, length: {len(result)}")
-            return result
-            
+            return response.choices[0].message.content.strip()
         except Exception as e:
-            error_msg = f"Reply generation failed: {type(e).__name__}: {str(e)}"
-            print(error_msg)
-            traceback.print_exc()
-            return error_msg
+            return f"Reply generation error: {type(e).__name__} - {str(e)}"
     
     def summarize_email(self, email: Dict, prompt_template: str) -> str:
         try:
-            print(f"Summarizing email from: {email.get('from')}")
-            
             prompt = prompt_template.format(
-                from_=email.get('from', 'Unknown'),
+                from_sender=email.get('from', 'Unknown'),
                 subject=email.get('subject', 'No Subject'),
                 body=email.get('body', '')
             )
-            
-            print(f"Prompt: {prompt[:100]}...")
-            
             response = self.client.chat.completions.create(
                 model=self.model,
                 messages=[{"role": "user", "content": prompt}],
-                temperature=0.5,
-                max_tokens=250
+                temperature=0.3,
+                max_tokens=300,
+                top_p=1
             )
-            
-            result = response.choices[0].message.content.strip()
-            print(f"Summary generated: {result[:50]}...")
-            return result
-            
+            return response.choices[0].message.content.strip()
         except Exception as e:
-            error_msg = f"Summarization failed: {type(e).__name__}: {str(e)}"
-            print(error_msg)
-            traceback.print_exc()
-            return error_msg
+            return f"Summarization error: {type(e).__name__} - {str(e)}"
     
     def chat_query(self, query: str, context: str) -> str:
         try:
@@ -142,7 +117,4 @@ class EmailAgent:
             )
             return response.choices[0].message.content.strip()
         except Exception as e:
-            error_msg = f"Chat query failed: {type(e).__name__}: {str(e)}"
-            print(error_msg)
-            traceback.print_exc()
-            return error_msg
+            return f"Chat error: {type(e).__name__} - {str(e)}"
