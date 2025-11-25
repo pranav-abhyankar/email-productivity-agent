@@ -196,6 +196,14 @@ st.markdown("""
         background: #fee2e2;
         color: #991b1b;
     }
+    
+    /* Header alignment */
+    .header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1rem;
+    }
     </style>
 """, unsafe_allow_html=True)
 
@@ -237,15 +245,15 @@ if 'show_summary' not in st.session_state:
 if 'current_summary' not in st.session_state:
     st.session_state.current_summary = ""
 
-# Compact Header
-col_h1, col_h2 = st.columns([3, 1])
-with col_h1:
-    st.title("✉️ AI Email Assistant")
-with col_h2:
-    if st.session_state.agent:
-        st.markdown('<span class="status-badge status-online">🟢 AI Online</span>', unsafe_allow_html=True)
-    else:
-        st.markdown('<span class="status-badge status-offline">🔴 Offline</span>', unsafe_allow_html=True)
+# Compact Header - Single line with flexbox
+status_badge = '<span class="status-badge status-online">🟢 AI Online</span>' if st.session_state.agent else '<span class="status-badge status-offline">🔴 Offline</span>'
+
+st.markdown(f"""
+    <div class="header-flex">
+        <h1 style="margin: 0;">✉️ AI Email Assistant</h1>
+        <div>{status_badge}</div>
+    </div>
+""", unsafe_allow_html=True)
 
 # Compact metrics row
 col_m1, col_m2, col_m3, col_m4 = st.columns(4)
@@ -349,7 +357,6 @@ with col_left:
     for email in sorted(emails_to_show, key=lambda x: x.get('timestamp', ''), reverse=True):
         is_selected = st.session_state.selected_email_id == email.get('id')
         
-        # Compact button with subject only
         icon = "✅" if is_selected else "📧"
         subject = email.get('subject', 'No Subject')[:35]
         
@@ -363,10 +370,8 @@ with col_left:
             st.session_state.show_summary = False
             st.rerun()
         
-        # Metadata below button - compact
         st.markdown(f'<div class="email-meta">👤 {email.get("from", "Unknown")[:25]}<br>📅 {email.get("timestamp", "")[:10]}</div>', unsafe_allow_html=True)
         
-        # Category badge
         if email.get('category'):
             badge_class = {
                 "Important": "badge-important",
@@ -386,7 +391,6 @@ with col_right:
         if email:
             tab1, tab2, tab3 = st.tabs(["📧 Email", "💬 AI Chat", "📊 Stats"])
             
-            # Tab 1: Email
             with tab1:
                 has_draft = email.get('draft_reply') is not None
                 
@@ -427,7 +431,7 @@ with col_right:
                                             "to": email.get('from', 'Unknown'),
                                             "subject": f"Re: {email.get('subject', 'No Subject')}",
                                             "body": reply_body,
-                                            "created_at": "2025-11-25T15:27:00"
+                                            "created_at": "2025-11-25T15:32:00"
                                         }
                                         st.session_state.db.add_draft(email['id'], draft)
                                         st.success("✅ Draft created!")
@@ -475,7 +479,6 @@ with col_right:
                     st.text_area("Body", value=draft.get('body', ''), height=180, label_visibility="collapsed", key="draft")
                     st.warning("⚠️ Draft not sent automatically")
             
-            # Tab 2: AI Chat (History in REVERSE order - newest first)
             with tab2:
                 st.markdown("### 💬 Ask AI")
                 
@@ -498,12 +501,10 @@ with col_right:
                 
                 st.divider()
                 
-                # Show history in REVERSE order (newest first)
                 if not st.session_state.chat_history:
                     st.info("💡 Ask about sentiment, action items, or get analysis")
                 else:
                     st.markdown("### 📜 History (Newest First)")
-                    # Reverse the chat history
                     for msg in reversed(st.session_state.chat_history):
                         if msg['role'] == 'user':
                             st.chat_message("user").write(msg['content'])
@@ -514,7 +515,6 @@ with col_right:
                     st.session_state.chat_history = []
                     st.rerun()
             
-            # Tab 3: Stats
             with tab3:
                 st.markdown("### 📊 Statistics")
                 
