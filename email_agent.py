@@ -1,12 +1,18 @@
 import os
 import json
-from groq import Groq
-import groq
 from typing import Dict, List, Optional
+
+try:
+    from groq import Groq
+except ImportError:
+    Groq = None
 
 class EmailAgent:
     def __init__(self, api_key: str):
         """Initialize EmailAgent with Groq API"""
+        if Groq is None:
+            raise ImportError("Groq package not installed. Install with: pip install groq")
+        
         self.client = Groq(api_key=api_key)
         self.model = "llama-3.1-8b-instant"
     
@@ -31,17 +37,8 @@ class EmailAgent:
             valid_categories = ["Important", "Newsletter", "Spam", "To-Do"]
             return category if category in valid_categories else "Important"
         
-        except groq.APIConnectionError as e:
-            print(f"Network error during categorization: {e}")
-            return "Important"
-        except groq.RateLimitError as e:
-            print(f"Rate limit exceeded: {e}")
-            return "Important"
-        except groq.APIStatusError as e:
-            print(f"API error during categorization: {e.status_code}")
-            return "Important"
         except Exception as e:
-            print(f"Unexpected categorization error: {e}")
+            print(f"Categorization error: {e}")
             return "Important"
     
     def extract_actions(self, email: Dict, prompt_template: str) -> List[Dict]:
@@ -85,15 +82,6 @@ class EmailAgent:
         except json.JSONDecodeError as e:
             print(f"JSON parsing error in action extraction: {e}")
             return []
-        except groq.APIConnectionError as e:
-            print(f"Network error during action extraction: {e}")
-            return []
-        except groq.RateLimitError as e:
-            print(f"Rate limit exceeded: {e}")
-            return []
-        except groq.APIStatusError as e:
-            print(f"API error during action extraction: {e.status_code}")
-            return []
         except Exception as e:
             print(f"Unexpected action extraction error: {e}")
             return []
@@ -116,12 +104,6 @@ class EmailAgent:
             
             return response.choices.message.content.strip()
         
-        except groq.APIConnectionError as e:
-            return "Unable to generate reply due to network error. Please try again."
-        except groq.RateLimitError as e:
-            return "Rate limit reached. Please wait a moment and try again."
-        except groq.APIStatusError as e:
-            return f"API error occurred. Please try again later."
         except Exception as e:
             print(f"Reply generation error: {e}")
             return "Error generating reply. Please try again."
@@ -144,12 +126,6 @@ class EmailAgent:
             
             return response.choices.message.content.strip()
         
-        except groq.APIConnectionError as e:
-            return "Unable to generate summary due to network error."
-        except groq.RateLimitError as e:
-            return "Rate limit reached. Please wait a moment."
-        except groq.APIStatusError as e:
-            return "API error occurred. Please try again."
         except Exception as e:
             print(f"Summarization error: {e}")
             return "Error generating summary."
@@ -168,11 +144,5 @@ class EmailAgent:
             
             return response.choices.message.content.strip()
         
-        except groq.APIConnectionError as e:
-            return "Unable to process query due to network error. Please check your connection."
-        except groq.RateLimitError as e:
-            return "Rate limit reached. Please wait a moment and try again."
-        except groq.APIStatusError as e:
-            return "API error occurred. Please try again later."
         except Exception as e:
             return f"Error processing query. Please try again."
