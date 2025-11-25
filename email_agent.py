@@ -49,10 +49,16 @@ class EmailAgent:
             )
             content = response.choices[0].message.content.strip()
             
-            # Remove markdown code blocks if present
-            content = content.replace('```
-            content = content.replace('```', '')
-            content = content.strip()
+            # Clean up any markdown formatting
+            lines = content.split('\n')
+            clean_lines = [line for line in lines if not line.strip().startswith('#')]
+            content = '\n'.join(clean_lines)
+            
+            # Try to find JSON array
+            start_idx = content.find('[')
+            end_idx = content.rfind(']')
+            if start_idx != -1 and end_idx != -1:
+                content = content[start_idx:end_idx+1]
             
             actions = json.loads(content)
             if not isinstance(actions, list):
