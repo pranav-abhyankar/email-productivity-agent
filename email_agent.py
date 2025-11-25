@@ -49,10 +49,10 @@ class EmailAgent:
             )
             content = response.choices[0].message.content.strip()
             
-            if content.startswith('```
-                lines = content.split('\n')
-                content = '\n'.join(lines[1:-1]) if len(lines) > 2 else content
-                content = content.replace('```json', '').replace('```
+            # Remove markdown code blocks if present
+            content = content.replace('```
+            content = content.replace('```', '')
+            content = content.strip()
             
             actions = json.loads(content)
             if not isinstance(actions, list):
@@ -81,7 +81,7 @@ class EmailAgent:
                 temperature=0.7,
                 max_tokens=350
             )
-            return response.choices.message.content.strip()
+            return response.choices[0].message.content.strip()
         except Exception:
             return "Error generating reply. Please try again."
     
@@ -98,7 +98,7 @@ class EmailAgent:
                 temperature=0.5,
                 max_tokens=200
             )
-            return response.choices.message.content.strip()
+            return response.choices[0].message.content.strip()
         except Exception:
             return "Error generating summary."
     
@@ -111,6 +111,6 @@ class EmailAgent:
                 temperature=0.7,
                 max_tokens=350
             )
-            return response.choices.message.content.strip()
+            return response.choices[0].message.content.strip()
         except Exception:
             return "Error processing query. Please try again."
