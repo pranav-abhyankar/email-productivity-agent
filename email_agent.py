@@ -58,8 +58,8 @@ class EmailAgent:
             
             content = response.choices[0].message.content.strip()
             
-            if content.startswith("```
-                content = content.replace("```json", "").replace("```
+            if content.startswith('```
+                content = content.replace('```json', '').replace('```
             
             actions = json.loads(content)
             
@@ -139,4 +139,4 @@ class EmailAgent:
             return response.choices.message.content.strip()
         
         except Exception as e:
-            return f"Error processing query. Please try again."
+            return "Error processing query. Please try again."
