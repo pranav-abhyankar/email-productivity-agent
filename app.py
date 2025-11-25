@@ -319,7 +319,7 @@ with col3:
         label_visibility="collapsed"
     )
     
-    col_send, col_clear = st.columns()[2][3]
+    col_send, col_clear = st.columns(2)
     
     with col_send:
         if st.button("Send", type="primary", use_container_width=True) and user_query:
@@ -372,5 +372,6 @@ with col_stat3:
 with col_stat4:
     spam_count = len(st.session_state.db.get_emails_by_category('Spam'))
     st.metric("Spam", spam_count)
+
 
 
