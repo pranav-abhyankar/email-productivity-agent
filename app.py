@@ -25,84 +25,52 @@ st.markdown("""
     
     /* Content container */
     .block-container {
-        padding-top: 2rem;
-        padding-bottom: 2rem;
+        padding-top: 1rem !important;
+        padding-bottom: 1rem !important;
         max-width: 95%;
     }
     
-    /* Hide empty containers */
-    .element-container:has(> .stMarkdown > div:empty) {
-        display: none;
+    /* Compact header */
+    [data-testid="stMetricValue"] {
+        font-size: 1.5rem;
     }
     
-    /* Email card styling */
-    .email-card {
-        background: white;
-        padding: 1rem;
-        border-radius: 12px;
-        margin-bottom: 0.8rem;
-        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        transition: all 0.3s ease;
-        border-left: 5px solid #667eea;
-        cursor: pointer;
-    }
-    
-    .email-card:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 8px 15px rgba(0,0,0,0.2);
-    }
-    
-    /* Email detail card */
-    .detail-card {
-        background: white;
-        padding: 2rem;
-        border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    }
-    
-    /* Draft highlight */
-    .draft-card {
-        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 2px solid #667eea;
-        margin-top: 1rem;
-        animation: fadeIn 0.5s ease;
-    }
-    
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(10px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-    
-    /* Faded content when draft exists */
-    .faded-content {
-        opacity: 0.4;
-        transition: opacity 0.3s ease;
+    [data-testid="stMetricLabel"] {
+        font-size: 0.8rem;
     }
     
     /* Button styling */
     .stButton>button {
-        border-radius: 10px;
+        border-radius: 8px;
         font-weight: 600;
-        transition: all 0.3s ease;
+        transition: all 0.2s ease;
         border: none;
-        height: 3rem;
+        padding: 0.5rem 1rem;
+        font-size: 0.9rem;
     }
     
     .stButton>button:hover {
         transform: scale(1.02);
-        box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+    }
+    
+    /* Compact email list buttons */
+    div[data-testid="column"]:first-child .stButton>button {
+        text-align: left;
+        padding: 0.6rem 0.8rem;
+        height: auto;
+        white-space: normal;
+        line-height: 1.3;
     }
     
     /* Category badges */
     .category-badge {
         display: inline-block;
-        padding: 0.3rem 0.8rem;
-        border-radius: 20px;
-        font-size: 0.85rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 12px;
+        font-size: 0.75rem;
         font-weight: 600;
-        margin: 0.2rem;
+        margin: 0.2rem 0;
     }
     
     .badge-important {
@@ -125,59 +93,42 @@ st.markdown("""
         color: white;
     }
     
-    /* Chat messages */
-    .stChatMessage {
-        background: white;
-        border-radius: 10px;
-        padding: 1rem;
-        margin: 0.5rem 0;
-    }
-    
-    /* Metrics */
-    .metric-card {
-        background: white;
+    /* Draft highlight */
+    .draft-card {
+        background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
         padding: 1.5rem;
         border-radius: 12px;
-        text-align: center;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        border: 2px solid #667eea;
+        margin-top: 1rem;
+        animation: fadeIn 0.5s ease;
     }
     
-    .metric-value {
-        font-size: 2.5rem;
-        font-weight: 700;
-        color: #667eea;
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
     
-    .metric-label {
-        font-size: 0.9rem;
-        color: #6b7280;
-        margin-top: 0.5rem;
-    }
-    
-    /* Header */
-    .header-container {
-        background: white;
-        padding: 1.5rem 2rem;
-        border-radius: 16px;
-        margin-bottom: 2rem;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    /* Faded content */
+    .faded-content {
+        opacity: 0.5;
     }
     
     /* Action items */
     .action-item {
         background: #fef3c7;
-        padding: 1rem;
-        border-radius: 10px;
-        margin: 0.5rem 0;
-        border-left: 4px solid #f59e0b;
+        padding: 0.8rem;
+        border-radius: 8px;
+        margin: 0.4rem 0;
+        border-left: 3px solid #f59e0b;
+        font-size: 0.9rem;
     }
     
     /* Summary box */
     .summary-box {
         background: #dbeafe;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border-left: 4px solid #3b82f6;
+        padding: 1.2rem;
+        border-radius: 10px;
+        border-left: 3px solid #3b82f6;
         margin-top: 1rem;
         animation: slideIn 0.4s ease;
     }
@@ -187,9 +138,17 @@ st.markdown("""
         to { transform: translateX(0); opacity: 1; }
     }
     
+    /* Chat messages */
+    .stChatMessage {
+        background: white;
+        border-radius: 10px;
+        padding: 0.8rem;
+        margin: 0.4rem 0;
+    }
+    
     /* Scrollbar */
     ::-webkit-scrollbar {
-        width: 8px;
+        width: 6px;
     }
     
     ::-webkit-scrollbar-track {
@@ -202,64 +161,40 @@ st.markdown("""
         border-radius: 10px;
     }
     
-    ::-webkit-scrollbar-thumb:hover {
-        background: #764ba2;
-    }
-    
-    /* Info cards */
-    .info-card {
-        background: #f0f9ff;
-        padding: 1rem;
-        border-radius: 10px;
-        border-left: 4px solid #3b82f6;
-        margin: 1rem 0;
-    }
-    
-    /* Status indicator */
-    .status-online {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #10b981;
-        border-radius: 50%;
-        margin-right: 0.5rem;
-        animation: pulse 2s infinite;
-    }
-    
-    @keyframes pulse {
-        0%, 100% { opacity: 1; }
-        50% { opacity: 0.5; }
-    }
-    
-    .status-offline {
-        display: inline-block;
-        width: 10px;
-        height: 10px;
-        background: #ef4444;
-        border-radius: 50%;
-        margin-right: 0.5rem;
-    }
-    
     /* Hide Streamlit branding */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     
-    /* Fix chat input position */
-    .stChatInputContainer {
-        background: white;
-        padding: 1rem;
-        border-radius: 10px;
-        margin-bottom: 1rem;
+    /* Compact spacing */
+    .element-container {
+        margin-bottom: 0.5rem;
     }
     
-    /* Chat history container */
-    .chat-history {
-        max-height: 400px;
-        overflow-y: auto;
-        padding: 1rem;
-        background: white;
-        border-radius: 10px;
-        margin-top: 1rem;
+    /* Email metadata compact */
+    .email-meta {
+        font-size: 0.75rem;
+        color: #6b7280;
+        margin: 0.2rem 0;
+    }
+    
+    /* Status badges */
+    .status-badge {
+        display: inline-flex;
+        align-items: center;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+    
+    .status-online {
+        background: #d1fae5;
+        color: #065f46;
+    }
+    
+    .status-offline {
+        background: #fee2e2;
+        color: #991b1b;
     }
     </style>
 """, unsafe_allow_html=True)
@@ -302,24 +237,26 @@ if 'show_summary' not in st.session_state:
 if 'current_summary' not in st.session_state:
     st.session_state.current_summary = ""
 
-# Header
-col_h1, col_h2, col_h3 = st.columns([3, 2, 1])
+# Compact Header
+col_h1, col_h2 = st.columns([3, 1])
 with col_h1:
-    st.markdown("# ✉️ AI Email Assistant")
-    st.caption("Powered by Groq AI • LLaMA 3.1 8B Instant")
+    st.title("✉️ AI Email Assistant")
 with col_h2:
-    col_m1, col_m2, col_m3 = st.columns(3)
-    with col_m1:
-        st.metric("📧", len(st.session_state.db.emails))
-    with col_m2:
-        st.metric("🟡", len(st.session_state.db.get_emails_by_category('To-Do')))
-    with col_m3:
-        st.metric("🔴", len(st.session_state.db.get_emails_by_category('Important')))
-with col_h3:
     if st.session_state.agent:
-        st.success("🟢 AI Online")
+        st.markdown('<span class="status-badge status-online">🟢 AI Online</span>', unsafe_allow_html=True)
     else:
-        st.error("🔴 Offline")
+        st.markdown('<span class="status-badge status-offline">🔴 Offline</span>', unsafe_allow_html=True)
+
+# Compact metrics row
+col_m1, col_m2, col_m3, col_m4 = st.columns(4)
+with col_m1:
+    st.metric("📧 Total", len(st.session_state.db.emails))
+with col_m2:
+    st.metric("🟡 To-Do", len(st.session_state.db.get_emails_by_category('To-Do')))
+with col_m3:
+    st.metric("🔴 Important", len(st.session_state.db.get_emails_by_category('Important')))
+with col_m4:
+    st.metric("⚫ Spam", len(st.session_state.db.get_emails_by_category('Spam')))
 
 st.divider()
 
@@ -328,12 +265,8 @@ with st.sidebar:
     st.markdown("### ⚙️ Configuration")
     
     if st.session_state.agent is None:
-        st.warning("⚠️ Configure Groq API Key")
-        api_key_input = st.text_input(
-            "API Key",
-            type="password",
-            help="Get free key: console.groq.com"
-        )
+        st.warning("⚠️ API Key Required")
+        api_key_input = st.text_input("Groq API Key", type="password")
         if st.button("💾 Connect", use_container_width=True, type="primary"):
             if api_key_input:
                 try:
@@ -344,20 +277,17 @@ with st.sidebar:
                 except Exception as e:
                     st.error(f"Error: {e}")
     else:
-        st.success("✅ AI Connected")
+        st.success("✅ Connected")
     
     st.divider()
     
-    if st.button("🚀 Process All Emails", use_container_width=True, type="primary", disabled=st.session_state.processing):
+    if st.button("🚀 Process All", use_container_width=True, type="primary", disabled=st.session_state.processing):
         if st.session_state.agent:
             st.session_state.processing = True
             progress = st.progress(0)
-            status = st.empty()
             
             total = len(st.session_state.db.emails)
             for idx, email in enumerate(st.session_state.db.emails):
-                status.text(f"Processing {idx+1}/{total}...")
-                
                 cat_prompt = st.session_state.db.get_prompt('categorization')
                 category = st.session_state.agent.categorize_email(email, cat_prompt)
                 
@@ -371,37 +301,32 @@ with st.sidebar:
                 
                 progress.progress((idx + 1) / total)
             
-            status.empty()
             progress.empty()
-            st.success(f"✅ Processed {total} emails!")
+            st.success(f"✅ Done!")
             st.session_state.processing = False
             st.rerun()
         else:
-            st.error("Configure API key first")
+            st.error("Configure API key")
     
     st.divider()
     
-    with st.expander("🧠 Edit Prompts"):
+    with st.expander("🧠 Prompts"):
         prompt_type = st.selectbox(
-            "Select Prompt",
+            "Type",
             ["categorization", "action_extraction", "auto_reply", "summarization"]
         )
         
         current_prompt = st.session_state.db.get_prompt(prompt_type)
-        edited_prompt = st.text_area(
-            "Template",
-            value=current_prompt,
-            height=150
-        )
+        edited_prompt = st.text_area("Template", value=current_prompt, height=120)
         
         if st.button("💾 Save", use_container_width=True):
             st.session_state.db.update_prompt(prompt_type, edited_prompt)
             st.success("Saved!")
 
 # Main Layout
-col_left, col_right = st.columns([1, 2])
+col_left, col_right = st.columns([1, 2.5])
 
-# Left Column: Email List
+# Left: Compact Email List
 with col_left:
     st.markdown("### 📥 Inbox")
     
@@ -419,13 +344,17 @@ with col_left:
             emails_to_show = st.session_state.db.get_emails_by_category(filter_cat)
     
     if not emails_to_show:
-        st.info(f"No emails in '{filter_cat}'")
+        st.info(f"No emails")
     
     for email in sorted(emails_to_show, key=lambda x: x.get('timestamp', ''), reverse=True):
         is_selected = st.session_state.selected_email_id == email.get('id')
         
+        # Compact button with subject only
+        icon = "✅" if is_selected else "📧"
+        subject = email.get('subject', 'No Subject')[:35]
+        
         if st.button(
-            f"{'📧' if not is_selected else '✅'} {email.get('subject', 'No Subject')[:30]}...",
+            f"{icon} {subject}",
             key=f"email_{email.get('id')}",
             use_container_width=True,
             type="primary" if is_selected else "secondary"
@@ -434,9 +363,10 @@ with col_left:
             st.session_state.show_summary = False
             st.rerun()
         
-        st.caption(f"👤 {email.get('from', 'Unknown')[:30]}")
-        st.caption(f"📅 {email.get('timestamp', '')[:10]}")
+        # Metadata below button - compact
+        st.markdown(f'<div class="email-meta">👤 {email.get("from", "Unknown")[:25]}<br>📅 {email.get("timestamp", "")[:10]}</div>', unsafe_allow_html=True)
         
+        # Category badge
         if email.get('category'):
             badge_class = {
                 "Important": "badge-important",
@@ -446,36 +376,31 @@ with col_left:
             }.get(email.get('category'), "")
             st.markdown(f'<span class="category-badge {badge_class}">{email.get("category")}</span>', unsafe_allow_html=True)
         
-        st.divider()
+        st.markdown("<br>", unsafe_allow_html=True)
 
-# Right Column: Email Details with Tabs
+# Right: Email Details
 with col_right:
     if st.session_state.selected_email_id:
         email = st.session_state.db.get_email(st.session_state.selected_email_id)
         
         if email:
-            tab1, tab2, tab3 = st.tabs(["📧 Email", "💬 AI Chat", "📊 Analytics"])
+            tab1, tab2, tab3 = st.tabs(["📧 Email", "💬 AI Chat", "📊 Stats"])
             
-            # Tab 1: Email Content
+            # Tab 1: Email
             with tab1:
                 has_draft = email.get('draft_reply') is not None
-                email_opacity = "faded-content" if has_draft else ""
                 
                 st.markdown(f"## {email.get('subject', 'No Subject')}")
+                st.caption(f"**From:** {email.get('from', 'Unknown')} • **Date:** {email.get('timestamp', 'Unknown')[:16]}")
                 
-                col_meta1, col_meta2 = st.columns([2, 1])
-                with col_meta1:
-                    st.markdown(f"**From:** {email.get('from', 'Unknown')}")
-                    st.caption(f"**Date:** {email.get('timestamp', 'Unknown')}")
-                with col_meta2:
-                    if email.get('category'):
-                        badge_class = {
-                            "Important": "badge-important",
-                            "To-Do": "badge-todo",
-                            "Newsletter": "badge-newsletter",
-                            "Spam": "badge-spam"
-                        }.get(email.get('category'), "")
-                        st.markdown(f'<span class="category-badge {badge_class}">{email.get("category")}</span>', unsafe_allow_html=True)
+                if email.get('category'):
+                    badge_class = {
+                        "Important": "badge-important",
+                        "To-Do": "badge-todo",
+                        "Newsletter": "badge-newsletter",
+                        "Spam": "badge-spam"
+                    }.get(email.get('category'), "")
+                    st.markdown(f'<span class="category-badge {badge_class}">{email.get("category")}</span>', unsafe_allow_html=True)
                 
                 st.divider()
                 
@@ -487,10 +412,10 @@ with col_right:
                     for idx, action in enumerate(email['action_items'], 1):
                         st.markdown(f'<div class="action-item">**{idx}.** {action.get("task", "N/A")}<br>⏰ {action.get("deadline", "No deadline")}</div>', unsafe_allow_html=True)
                 
-                col_btn1, col_btn2, col_btn3 = st.columns(3)
+                col_b1, col_b2, col_b3 = st.columns(3)
                 
-                with col_btn1:
-                    if st.button("✍️ Generate Reply", use_container_width=True, type="primary"):
+                with col_b1:
+                    if st.button("✍️ Reply", use_container_width=True, type="primary"):
                         if st.session_state.agent:
                             with st.spinner("✨ Generating..."):
                                 try:
@@ -502,7 +427,7 @@ with col_right:
                                             "to": email.get('from', 'Unknown'),
                                             "subject": f"Re: {email.get('subject', 'No Subject')}",
                                             "body": reply_body,
-                                            "created_at": "2025-11-25T15:23:00"
+                                            "created_at": "2025-11-25T15:27:00"
                                         }
                                         st.session_state.db.add_draft(email['id'], draft)
                                         st.success("✅ Draft created!")
@@ -512,9 +437,9 @@ with col_right:
                                 except Exception as e:
                                     st.error(f"Error: {e}")
                         else:
-                            st.error("Configure API key")
+                            st.error("No API key")
                 
-                with col_btn2:
+                with col_b2:
                     if st.button("📝 Summarize", use_container_width=True):
                         if st.session_state.agent:
                             with st.spinner("✨ Summarizing..."):
@@ -530,33 +455,31 @@ with col_right:
                                 except Exception as e:
                                     st.error(f"Error: {e}")
                         else:
-                            st.error("Configure API key")
+                            st.error("No API key")
                 
-                with col_btn3:
+                with col_b3:
                     if has_draft:
-                        if st.button("🗑️ Delete Draft", use_container_width=True):
+                        if st.button("🗑️ Delete", use_container_width=True):
                             st.session_state.db.update_email(email['id'], {'draft_reply': None})
-                            st.success("Draft deleted!")
+                            st.success("Deleted!")
                             st.rerun()
                 
                 if st.session_state.show_summary and st.session_state.current_summary:
-                    st.markdown(f'<div class="summary-box"><strong>📝 AI Summary:</strong><br><br>{st.session_state.current_summary}</div>', unsafe_allow_html=True)
+                    st.markdown(f'<div class="summary-box"><strong>📝 Summary:</strong><br>{st.session_state.current_summary}</div>', unsafe_allow_html=True)
                 
                 if has_draft:
                     st.markdown("---")
                     st.markdown("### 📧 Draft Reply ✨")
                     draft = email['draft_reply']
-                    st.info(f"**To:** {draft.get('to', 'Unknown')}")
-                    st.info(f"**Subject:** {draft.get('subject', 'No Subject')}")
-                    st.text_area("Draft Body", value=draft.get('body', ''), height=200, label_visibility="collapsed", key="draft_body")
-                    st.warning("⚠️ Draft saved. Not sent automatically.")
+                    st.info(f"**To:** {draft.get('to')} • **Subject:** {draft.get('subject')}")
+                    st.text_area("Body", value=draft.get('body', ''), height=180, label_visibility="collapsed", key="draft")
+                    st.warning("⚠️ Draft not sent automatically")
             
-            # Tab 2: AI Chat - Chat input FIRST, history BELOW
+            # Tab 2: AI Chat (History in REVERSE order - newest first)
             with tab2:
-                st.markdown("### 💬 Ask AI About This Email")
+                st.markdown("### 💬 Ask AI")
                 
-                # Chat input at TOP
-                user_query = st.chat_input("Type your question here...")
+                user_query = st.chat_input("Ask about this email...")
                 
                 if user_query:
                     if st.session_state.agent:
@@ -571,47 +494,47 @@ with col_right:
                             st.session_state.chat_history.append({"role": "assistant", "content": f"Error: {e}"})
                             st.rerun()
                     else:
-                        st.error("Configure API key first")
+                        st.error("Configure API key")
                 
                 st.divider()
                 
-                # Chat history BELOW
+                # Show history in REVERSE order (newest first)
                 if not st.session_state.chat_history:
-                    st.info("💡 Ask me anything about this email - analysis, action items, sentiment, etc.")
+                    st.info("💡 Ask about sentiment, action items, or get analysis")
                 else:
-                    st.markdown("### 📜 Conversation History")
-                    for msg in st.session_state.chat_history:
+                    st.markdown("### 📜 History (Newest First)")
+                    # Reverse the chat history
+                    for msg in reversed(st.session_state.chat_history):
                         if msg['role'] == 'user':
                             st.chat_message("user").write(msg['content'])
                         else:
                             st.chat_message("assistant").write(msg['content'])
                 
-                if st.button("🗑️ Clear Chat History", use_container_width=True):
+                if st.button("🗑️ Clear", use_container_width=True):
                     st.session_state.chat_history = []
                     st.rerun()
             
-            # Tab 3: Analytics
+            # Tab 3: Stats
             with tab3:
-                st.markdown("### 📊 Email Statistics")
+                st.markdown("### 📊 Statistics")
                 
-                col_stat1, col_stat2 = st.columns(2)
+                col_s1, col_s2 = st.columns(2)
                 
-                with col_stat1:
+                with col_s1:
                     st.metric("📝 Characters", len(email.get("body", "")))
                 
-                with col_stat2:
-                    word_count = len(email.get('body', '').split())
-                    st.metric("📖 Words", word_count)
+                with col_s2:
+                    st.metric("📖 Words", len(email.get('body', '').split()))
                 
                 st.divider()
                 
-                st.markdown("### 📈 Category Distribution")
+                st.markdown("### 📈 Distribution")
                 categories = ["Important", "To-Do", "Newsletter", "Spam"]
-                data = {cat: len(st.session_state.db.get_emails_by_category(cat)) for cat in categories}
                 
-                for cat, count in data.items():
-                    percentage = count / max(1, len(st.session_state.db.emails))
-                    st.progress(percentage, text=f"{cat}: {count} emails ({int(percentage*100)}%)")
+                for cat in categories:
+                    count = len(st.session_state.db.get_emails_by_category(cat))
+                    pct = count / max(1, len(st.session_state.db.emails))
+                    st.progress(pct, text=f"{cat}: {count} ({int(pct*100)}%)")
     
     else:
-        st.info("👈 Select an email from the inbox to view details")
+        st.info("👈 Select an email")
