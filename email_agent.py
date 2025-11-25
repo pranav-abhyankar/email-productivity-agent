@@ -49,9 +49,10 @@ class EmailAgent:
             )
             content = response.choices[0].message.content.strip()
             
-            code_fence = '```
-            if content.startswith(code_fence):
-                content = content.replace(code_fence + 'json', '').replace(code_fence, '').strip()
+            if content.startswith('```
+                lines = content.split('\n')
+                content = '\n'.join(lines[1:-1]) if len(lines) > 2 else content
+                content = content.replace('```json', '').replace('```
             
             actions = json.loads(content)
             if not isinstance(actions, list):
