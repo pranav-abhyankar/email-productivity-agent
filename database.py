@@ -9,6 +9,12 @@ class EmailDatabase:
         self.prompts_file = prompts_file
         self.emails = self.load_emails()
         self.prompts = self.load_prompts()
+        
+        # DEBUG: Print loaded prompts
+        print(f"Loaded {len(self.prompts)} prompt types")
+        for key in self.prompts.keys():
+            template = self.prompts[key].get('template', '')
+            print(f"  {key}: {len(template)} chars")
     
     def load_emails(self) -> List[Dict]:
         """Load emails from JSON file with error handling"""
@@ -30,6 +36,7 @@ class EmailDatabase:
                     if 'draft_reply' not in email:
                         email['draft_reply'] = None
                 
+                print(f"Loaded {len(emails)} emails from {self.inbox_file}")
                 return emails
         
         except json.JSONDecodeError as e:
@@ -44,6 +51,7 @@ class EmailDatabase:
         try:
             with open(self.inbox_file, 'w', encoding='utf-8') as f:
                 json.dump({'emails': self.emails}, f, indent=2, ensure_ascii=False)
+            print(f"Saved {len(self.emails)} emails")
         except Exception as e:
             print(f"Error saving emails: {e}")
     
@@ -55,7 +63,9 @@ class EmailDatabase:
                 return self._get_default_prompts()
             
             with open(self.prompts_file, 'r', encoding='utf-8') as f:
-                return json.load(f)
+                prompts = json.load(f)
+                print(f"Loaded prompts from {self.prompts_file}")
+                return prompts
         
         except json.JSONDecodeError as e:
             print(f"Error parsing {self.prompts_file}: {e}. Using defaults.")
@@ -69,19 +79,19 @@ class EmailDatabase:
         return {
             "categorization": {
                 "name": "Email Categorization",
-                "template": "Categorize this email as: Important, Newsletter, Spam, or To-Do.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nRespond with ONLY the category name."
+                "template": "Categorize this email as Important, Newsletter, Spam, or To-Do.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nRespond with only one word: the category name."
             },
             "action_extraction": {
                 "name": "Action Item Extraction",
-                "template": "Extract tasks from this email as JSON array.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nReturn: [{\"task\": \"...\", \"deadline\": \"...\"}]"
+                "template": "Extract tasks from this email. Return empty array [] if none.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nReturn JSON array only."
             },
             "auto_reply": {
                 "name": "Auto-Reply Draft",
-                "template": "Draft a professional reply.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}"
+                "template": "Write a professional reply to this email.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nWrite only the reply body."
             },
             "summarization": {
                 "name": "Email Summarization",
-                "template": "Summarize in 2-3 sentences.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}"
+                "template": "Summarize this email in 2-3 sentences.\n\nFrom: {from_}\nSubject: {subject}\nBody: {body}\n\nProvide only the summary."
             }
         }
     
@@ -90,6 +100,7 @@ class EmailDatabase:
         try:
             with open(self.prompts_file, 'w', encoding='utf-8') as f:
                 json.dump(self.prompts, f, indent=2, ensure_ascii=False)
+            print(f"Saved {len(self.prompts)} prompts")
         except Exception as e:
             print(f"Error saving prompts: {e}")
     
@@ -110,13 +121,25 @@ class EmailDatabase:
     
     def get_prompt(self, prompt_type: str) -> str:
         """Get prompt template by type"""
-        return self.prompts.get(prompt_type, {}).get('template', '')
+        prompt_data = self.prompts.get(prompt_type, {})
+        template = prompt_data.get('template', '')
+        
+        # DEBUG
+        print(f"Getting prompt '{prompt_type}': {len(template)} chars")
+        if not template:
+            print(f"WARNING: Empty template for {prompt_type}")
+            print(f"Available prompts: {list(self.prompts.keys())}")
+        
+        return template
     
     def update_prompt(self, prompt_type: str, template: str):
         """Update prompt template"""
         if prompt_type in self.prompts:
             self.prompts[prompt_type]['template'] = template
             self.save_prompts()
+            print(f"Updated prompt '{prompt_type}' to {len(template)} chars")
+        else:
+            print(f"ERROR: Prompt type '{prompt_type}' not found")
     
     def get_emails_by_category(self, category: str) -> List[Dict]:
         """Filter emails by category"""
