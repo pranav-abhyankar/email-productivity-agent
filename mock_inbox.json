@@ -1,0 +1,169 @@
+{
+  "emails": [
+    {
+      "id": 1,
+      "from": "john.doe@company.com",
+      "to": "user@email.com",
+      "subject": "Urgent: Project Deadline Extended",
+      "body": "Hi Team,\n\nGood news! The Q4 project deadline has been extended to December 15th. Please review the updated requirements document and confirm your availability for the sync meeting on Friday at 2 PM.\n\nBest regards,\nJohn",
+      "timestamp": "2025-11-24T09:15:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 2,
+      "from": "newsletter@techinsights.com",
+      "to": "user@email.com",
+      "subject": "Weekly Tech Digest - AI Breakthroughs",
+      "body": "This week's top stories:\n- New LLM models break performance records\n- Cloud computing trends for 2025\n- Best practices for API security\n\nUnsubscribe | View in browser",
+      "timestamp": "2025-11-23T08:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 3,
+      "from": "spam@random-offers.biz",
+      "to": "user@email.com",
+      "subject": "CLAIM YOUR $1000 PRIZE NOW!!!",
+      "body": "Congratulations! You've won $1000! Click here immediately to claim your prize. Limited time offer. Act now!!!",
+      "timestamp": "2025-11-23T14:30:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 4,
+      "from": "sarah.manager@company.com",
+      "to": "user@email.com",
+      "subject": "Action Required: Code Review by EOD",
+      "body": "Hi,\n\nCan you please review the pull request #234 for the authentication module? We need your approval by end of day today to merge it into production tomorrow morning.\n\nPR link: github.com/repo/pr/234\n\nThanks,\nSarah",
+      "timestamp": "2025-11-24T11:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 5,
+      "from": "hr@company.com",
+      "to": "user@email.com",
+      "subject": "Meeting Request: Performance Review",
+      "body": "Hello,\n\nI'd like to schedule your quarterly performance review. Are you available next Tuesday, November 28th at 10 AM? Please let me know if this works or suggest alternative times.\n\nBest,\nHR Team",
+      "timestamp": "2025-11-24T10:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 6,
+      "from": "client@external.com",
+      "to": "user@email.com",
+      "subject": "Feature Request for Dashboard",
+      "body": "Hi,\n\nWe love the new dashboard! Could you add export functionality for CSV and PDF formats? This would really help our reporting process. No immediate deadline, but would appreciate it in the next sprint if possible.\n\nThanks!",
+      "timestamp": "2025-11-22T16:45:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 7,
+      "from": "updates@github.com",
+      "to": "user@email.com",
+      "subject": "[Notification] New issue assigned to you",
+      "body": "Issue #456 has been assigned to you: 'Fix login redirect bug'\n\nPriority: High\nMilestone: v2.1.0\nDue: November 30, 2025\n\nView on GitHub",
+      "timestamp": "2025-11-24T13:20:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 8,
+      "from": "marketing@newsletter.io",
+      "to": "user@email.com",
+      "subject": "50% Off Black Friday Sale!",
+      "body": "Don't miss our biggest sale of the year! Use code BLACKFRIDAY50 for 50% off all premium plans. Offer valid until November 30th.\n\nShop Now | View Deals",
+      "timestamp": "2025-11-23T07:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 9,
+      "from": "team.lead@company.com",
+      "to": "user@email.com",
+      "subject": "Sprint Planning Notes",
+      "body": "Hi team,\n\nAttached are the sprint planning notes from today's meeting. Key points:\n- Focus on bug fixes this sprint\n- New feature development postponed\n- Daily standups at 9:30 AM\n\nLet me know if you have questions.",
+      "timestamp": "2025-11-24T15:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 10,
+      "from": "security@company.com",
+      "to": "user@email.com",
+      "subject": "Required: Update Your Password",
+      "body": "As part of our security policy, all passwords must be updated every 90 days. Your password expires in 3 days. Please update it at your earliest convenience.\n\nUpdate Password | Security Guidelines",
+      "timestamp": "2025-11-24T08:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 11,
+      "from": "offers@spam-deals.net",
+      "to": "user@email.com",
+      "subject": "Re: Re: Re: Fwd: AMAZING OPPORTUNITY",
+      "body": "Make money from home! No experience needed! Earn $5000/week working just 2 hours a day! Click here now to get started!",
+      "timestamp": "2025-11-22T19:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 12,
+      "from": "dave@partner-company.com",
+      "to": "user@email.com",
+      "subject": "Collaboration Opportunity",
+      "body": "Hey,\n\nI've been following your work on the ML integration project. We're working on something similar and would love to explore potential collaboration. Are you free for a call next week?\n\nCheers,\nDave",
+      "timestamp": "2025-11-23T11:30:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 13,
+      "from": "admin@company.com",
+      "to": "user@email.com",
+      "subject": "Office Closure Notice - Thanksgiving",
+      "body": "This is a reminder that our office will be closed on Thursday and Friday, November 23-24, for the Thanksgiving holiday. We will resume normal operations on Monday, November 27.\n\nHappy Thanksgiving!",
+      "timestamp": "2025-11-20T12:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 14,
+      "from": "accounting@company.com",
+      "to": "user@email.com",
+      "subject": "Expense Report Submission Reminder",
+      "body": "Hi,\n\nYour October expense report is still pending. Please submit it by November 27th to ensure timely reimbursement. If you have any questions, contact the accounting team.\n\nThank you!",
+      "timestamp": "2025-11-24T14:00:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    },
+    {
+      "id": 15,
+      "from": "product@company.com",
+      "to": "user@email.com",
+      "subject": "User Feedback Summary - Nov 2025",
+      "body": "Hi team,\n\nHere's this month's user feedback summary. Top requests:\n1. Dark mode for mobile app\n2. Faster search functionality\n3. Batch operations for data management\n\nFull report attached. Let's discuss in next week's product meeting.",
+      "timestamp": "2025-11-24T16:30:00",
+      "category": null,
+      "action_items": [],
+      "draft_reply": null
+    }
+  ]
+}
